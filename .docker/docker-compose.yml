@@ -1,0 +1,26 @@
+version: "3"
+
+services:
+  php:
+    build:
+      context: ./php
+      args:
+        TIMEZONE: ${TIMEZONE}
+    env_file:
+      - .env
+    volumes:
+      - ../:/var/www/twitter/
+    networks:
+      - twitter_network
+  nginx:
+    build:
+      context: ./nginx
+    volumes:
+      - ../:/var/www/twitter/
+    ports:
+      - 80:80
+    networks:
+      - twitter_network
+
+networks:
+  twitter_network:
